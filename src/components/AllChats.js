@@ -55,7 +55,7 @@ function AllChats() {
                   <div className="user-name">
                     <div>{person.name}</div>
 
-                    {person.status == "Available" ? (
+                    {person.status === "Available" ? (
                       <div className="row-flex">
                         <div className="country-name">Online</div>
                         <div className="available"></div>
