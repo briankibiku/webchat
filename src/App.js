@@ -8,7 +8,6 @@ function App() {
   useEffect(() => {
     const userNames = JSON.parse(localStorage.getItem("userName"));
     console.log(userNames);
-    // localStorage.setItem("userName", JSON.stringify(userName));
   }, [userName]);
 
   function onChange(e) {
