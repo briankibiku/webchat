@@ -1,43 +1,36 @@
 import "./App.css";
-import { Button, Form } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AllChats from "./components/AllChats";
+import IndividualChat from "./components/IndividualChat";
+import LandingPage from "./components/LandingPage";
 
 function App() {
-  const [userName, setUserName] = useState("");
-
-  useEffect(() => {
-    const userNames = JSON.parse(localStorage.getItem("userName"));
-    console.log(userNames);
-  }, [userName]);
-
-  function onChange(e) {
-    setUserName(e.target.value);
-  }
-
-  const navigateToChat = async () => {
-    await localStorage.setItem("userName", JSON.stringify(userName));
-    const userNames = JSON.parse(localStorage.getItem("userName"));
-    console.log(userNames);
-  };
-
   return (
     <>
-      <div className="App">
-        <Form>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <h3>Welcome to Chatly</h3>
-            <Form.Label>Enter your preferred username to proceed</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter username"
-              onChange={onChange}
+      <Router>
+        <div>
+          <Routes>
+            <Route
+              exact
+              path="/"
+              caseSensitive={false}
+              element={<LandingPage />}
             />
-          </Form.Group>
-          <Button variant="primary" type="submit" onClick={navigateToChat}>
-            Submit
-          </Button>
-        </Form>
-      </div>
+            <Route
+              exact
+              path="/individual/:username"
+              caseSensitive={false}
+              element={<IndividualChat />}
+            />
+            <Route
+              exact
+              path="/all-chats"
+              caseSensitive={false}
+              element={<AllChats />}
+            />
+          </Routes>
+        </div>
+      </Router>
     </>
   );
 }
