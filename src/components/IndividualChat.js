@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import "../App.css";
+import { Form, InputGroup } from "react-bootstrap";
 
 function IndividualChat() {
   const { userName } = useParams();
@@ -44,32 +45,60 @@ function IndividualChat() {
       setPeople(peopleListLS);
     }
   }, [userName]);
+
+  function onChange() {
+    console.log("Hello Chatly");
+  }
+
   return (
     <>
       <div className="chat-page">
-        <h5>
-          Chatly <span style={{ color: "orange" }}>{userName}</span>
-        </h5>
-        <div>Your conversation with {}</div>
-        <br />
-        {people.map((person) => {
-          return (
-            <div key={person.id}>
-              <a className="person-card" href="/individual/Ken">
-                <div>
-                  <div className="message">
-                    <div>{person.massage}</div>
+        <div>
+          <h5>
+            Chatly <span style={{ color: "orange" }}>{userName}</span>
+          </h5>
+          <div>Your conversation with {}</div>
+          <br />
+          {people.map((person) => {
+            return (
+              <div key={person.id}>
+                <a className="person-card" href="/individual/Ken">
+                  <div>
+                    <div className="message">
+                      <div>{person.massage}</div>
+                    </div>
+                    <div className="message-meta">
+                      <span>Time: </span>
+                      {person.time}
+                    </div>
                   </div>
-                  <div className="message-meta">
-                    <span>Time: </span>
-                    {person.time}
-                  </div>
-                </div>
+                </a>
+                <br />
+              </div>
+            );
+          })}
+        </div>
+
+        <div>
+          <InputGroup className="mb-3">
+            <Form.Control
+              placeholder="Type message here..."
+              aria-label="Type message here..."
+              aria-describedby="basic-addon2"
+            />
+            <InputGroup.Text id="basic-addon2">
+              <a
+                className="btn btn-primary"
+                variant="primary"
+                type="submit"
+                onClick={onChange}
+                href="all-chats/"
+              >
+                Send
               </a>
-              <br />
-            </div>
-          );
-        })}
+            </InputGroup.Text>
+          </InputGroup>
+        </div>
       </div>
     </>
   );

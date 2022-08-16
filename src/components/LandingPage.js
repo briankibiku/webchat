@@ -6,7 +6,9 @@ import "../App.css";
 function LandingPage() {
   const [userName, setUserName] = useState([]);
 
-  useEffect(() => {});
+  useEffect(() => {
+    localStorage.clear();
+  });
 
   function onChange(e) {
     setUserName(e.target.value);
