@@ -24,11 +24,11 @@ function IndividualChat() {
   }, [chats]);
 
   function onChange(e) {
-    // let newMessage = {
-    //   names: chatBuddy + userName,
-    //   message: [e.target.value, e.target.value],
-    // };
-    setMessage(e.target.value);
+    let newMessage = {
+      time: new Date(),
+      message: e.target.value,
+    };
+    setMessage(newMessage);
   }
 
   const saveAndFetchMessages = async () => {
@@ -44,7 +44,8 @@ function IndividualChat() {
     await localStorage.setItem("chats", JSON.stringify(chatPayload));
     const messages = JSON.parse(localStorage.getItem("chats"));
 
-    console.log(messages.chats);
+    console.log(messages);
+    setChats(messages.chats);
     console.log("CHATS");
   };
 
@@ -58,10 +59,19 @@ function IndividualChat() {
             <span style={{ color: "orange" }}>{chatBuddy}</span>
           </h6>
           <br />
-          {listIsEmpty == true ? (
+          {chats.length == 0 ? (
             <div>No messages yet...</div>
           ) : (
-            <div>Here are your messages</div>
+            <div style={{ textAlign: "right" }}>
+              {chats.map((chat) => {
+                return (
+                  <div key={chat.message}>
+                    <div className="message">{chat.message}</div>
+                    <div className="message-meta">{chat.time}</div>
+                  </div>
+                );
+              })}
+            </div>
           )}
         </div>
 
