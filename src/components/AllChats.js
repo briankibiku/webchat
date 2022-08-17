@@ -25,9 +25,6 @@ function AllChats() {
     if (userNames) {
       setUserName(userNames);
     }
-    console.log(peopleListLS);
-    console.log("ALL CHATS");
-    console.log(userNames);
   }, [userName]);
 
   function setChatBuddy(name) {

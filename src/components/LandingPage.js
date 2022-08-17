@@ -17,14 +17,15 @@ function LandingPage() {
   const navigateToChat = async () => {
     await localStorage.setItem("userName", JSON.stringify(userName));
     const userNames = JSON.parse(localStorage.getItem("userName"));
-    console.log(userNames);
   };
   return (
     <>
       <div className="App">
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <h3>Welcome to Chatly</h3>
+            <h3>
+              Welcome to <span style={{ color: "orange" }}>Chatly</span>{" "}
+            </h3>
             <Form.Label>Enter your preferred username to proceed</Form.Label>
             <Form.Control
               type="text"
