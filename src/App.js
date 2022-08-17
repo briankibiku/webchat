@@ -18,7 +18,7 @@ function App() {
             />
             <Route
               exact
-              path="/individual/:username"
+              path="/individual/:chatBuddy"
               caseSensitive={false}
               element={<IndividualChat />}
             />

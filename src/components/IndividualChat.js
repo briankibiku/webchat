@@ -5,78 +5,64 @@ import "../App.css";
 import { Form, InputGroup } from "react-bootstrap";
 
 function IndividualChat() {
-  const { userName } = useParams();
+  const { chatBuddy } = useParams();
 
-  const [people, setPeople] = useState([]);
+  const [message, setMessage] = useState([]);
+  const [chats, setChats] = useState([]);
+  const [userName, setUserName] = useState([]);
+
+  var listIsEmpty = true;
 
   useEffect(() => {
-    console.log("CHAT BUDDY");
-    console.log(userName);
-    const peopleList = [
-      { id: 1, massage: "Hey", time: "06:30", status: "Available" },
-      {
-        id: 3,
-        massage: "Are you in London?",
-        time: "11:12",
-        status: "Available",
-      },
-      { id: 2, massage: "Hello", time: "13:00", status: "Engaged" },
-      {
-        id: 4,
-        massage: "Please call me back",
-        time: "15:23",
-        status: "Engaged",
-      },
-      {
-        id: 5,
-        massage: "Bye! off to Kenya!",
-        time: "19:00 ",
-        status: "Available",
-      },
-    ];
-
     const userNames = JSON.parse(localStorage.getItem("userName"));
-    localStorage.setItem("people", JSON.stringify(peopleList));
-    const peopleListLS = JSON.parse(localStorage.getItem("people"));
-
-    const chatBud = JSON.parse(localStorage.getItem("chatBuddy"));
-
-    if (peopleListLS) {
-      setPeople(peopleListLS);
+    if (userNames) {
+      setUserName(userNames);
     }
-  }, [userName]);
+    console.log("CHAT BUDDY");
+    console.log(chatBuddy);
+    console.log(userName);
+  }, [chats]);
 
-  function onChange() {
-    console.log("Hello Chatly");
+  function onChange(e) {
+    // let newMessage = {
+    //   names: chatBuddy + userName,
+    //   message: [e.target.value, e.target.value],
+    // };
+    setMessage(e.target.value);
   }
+
+  const saveAndFetchMessages = async () => {
+    // get list of chats and append to it
+    // const oldmessages = JSON.parse(localStorage.getItem("chats"));
+    // if(oldmessages == null) {}
+    let uploadChat = [];
+    uploadChat.push(message);
+    let chatPayload = {
+      names: chatBuddy + userName,
+      chats: uploadChat,
+    };
+    await localStorage.setItem("chats", JSON.stringify(chatPayload));
+    const messages = JSON.parse(localStorage.getItem("chats"));
+
+    console.log(messages.chats);
+    console.log("CHATS");
+  };
 
   return (
     <>
-      <div className="chat-page">
+      <div className="chat-page-personal">
         <div>
-          <h5>
-            Chatly <span style={{ color: "orange" }}>{userName}</span>
-          </h5>
-          <div>Your conversation with {}</div>
+          <h5>Chatly</h5>
+          <h6>
+            You are chatting with{" "}
+            <span style={{ color: "orange" }}>{chatBuddy}</span>
+          </h6>
           <br />
-          {people.map((person) => {
-            return (
-              <div key={person.id}>
-                <a className="person-card" href="/individual/Ken">
-                  <div>
-                    <div className="message">
-                      <div>{person.massage}</div>
-                    </div>
-                    <div className="message-meta">
-                      <span>Time: </span>
-                      {person.time}
-                    </div>
-                  </div>
-                </a>
-                <br />
-              </div>
-            );
-          })}
+          {listIsEmpty == true ? (
+            <div>No messages yet...</div>
+          ) : (
+            <div>Here are your messages</div>
+          )}
         </div>
 
         <div>
@@ -85,14 +71,14 @@ function IndividualChat() {
               placeholder="Type message here..."
               aria-label="Type message here..."
               aria-describedby="basic-addon2"
+              onChange={onChange}
             />
             <InputGroup.Text id="basic-addon2">
               <a
                 className="btn btn-primary"
                 variant="primary"
                 type="submit"
-                onClick={onChange}
-                href="all-chats/"
+                onClick={saveAndFetchMessages}
               >
                 Send
               </a>

@@ -16,6 +16,17 @@
   text-align: left;
   padding: 20px;
 }
+.chat-page-personal{
+  width: 100%;
+  background-size: contain;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  text-align: left;
+  padding: 20px;
+}
 .person-card{
   text-decoration: none;
   color: #000;
